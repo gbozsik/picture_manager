@@ -13,13 +13,10 @@ A feladat elvégézéshez biztosított fáljok melyek a projektben megtalálhat�
     * Néhány teszt fálj és a hozzájuk tartozó BASE64 kódolt aláírás
 
 
-Megoldással kapcsolatos információk
+Megoldással kapcsolatos megjegyzések
 ===================================
 A "node-sass" függőség verzióját emeltem, mert a gépement frisebb nodeJs verzió fut.
-A privát és publikus kulcs nincs fent a repositoryban. Ezeket vissza kell másolni mielőtt a /resources/config/keys mappába
-A package.json fájl mappájában futtatni kell az alábbi parancsokat:
-npm install
-npm run build
+A privát és publikus kulcs nincs fent a repositoryban. Ezeket vissza kell másolni a /resources/config/keys mappába.
 Ezek után futtatahtó a `mvn spring-boot:run` parancs.
 
 

@@ -45,7 +45,7 @@ public class SignTest {
 	private MockMvc mockMvc;
 
 	@Test
-	public void contextLoads() throws Exception {
+	public void contextLoads() {
 		assertNotNull(uploadController);
 	}
 
@@ -61,7 +61,7 @@ public class SignTest {
 		var projectFolder = System.getProperty("user.dir");
 		String uploadsDir = format("%s/src/test/resources/images", projectFolder);
 		byte[] messageBytes = Files.readAllBytes(Paths.get(String.format("%s/%s", uploadsDir, fileName)));
-		MockMultipartFile firstFile = new MockMultipartFile("file", "cat.jpg", "text/plain", messageBytes);
+		MockMultipartFile firstFile = new MockMultipartFile("file", fileName, "text/plain", messageBytes);
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.multipart("/api/file/post")
 						.file(firstFile))
 				.andExpect(status().is(201)).andReturn();

@@ -15,7 +15,7 @@
       <tbody>
       <tr v-for="image in images">
         <th scope="row"  v-if="image">
-          <img :src="getComputedStyle(image.name)" class="img-circle" :alt="image.name" height="50px"/>
+          <img :src="'/api/images/preview/' + image.id" :alt="image.name" height="50px">
         
         </th>
         <td>{{image.id}}</td>
@@ -42,15 +42,14 @@ import { Component, Vue } from 'vue-property-decorator';
 	  digitalSign: string;
   }
 
-	 @Component
-	export default class ImageList extends Vue {
-		
+    @Component
+    export default class ImageList extends Vue {
+      
 	  private httpService: HttpService;
     private images: ImageMeta[] = [];
 	  
 	  constructor() {
 	  	super();
-	  	
 		  this.httpService = new FetchHttpService();
 	  }
 

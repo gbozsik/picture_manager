@@ -2,7 +2,7 @@ package hu.ponte.hr.controller.upload;
 
 import hu.ponte.hr.controller.ImageMeta;
 import hu.ponte.hr.exception.ServiceException;
-import hu.ponte.hr.services.ImageService;
+import hu.ponte.hr.services.UploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +20,18 @@ public class UploadController {
 
     private final static Logger log = LoggerFactory.getLogger(UploadController.class);
 
-    private final ImageService imageService;
+    private final UploadService uploadService;
 
     @Autowired
-    public UploadController(ImageService imageService) {
-        this.imageService = imageService;
+    public UploadController(UploadService uploadService) {
+        this.uploadService = uploadService;
     }
 
     @RequestMapping(value = "post", method = RequestMethod.POST)
     public ResponseEntity<ImageMeta> handleFormUpload(@RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
             try {
-                var imageMeta = imageService.uploadPicture(file);
+                var imageMeta = uploadService.uploadPicture(file);
                 return new ResponseEntity<>(imageMeta, HttpStatus.CREATED);
             } catch (ServiceException e) {
                 log.error("Could not upload picture", e);
