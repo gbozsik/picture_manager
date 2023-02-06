@@ -51,13 +51,7 @@ import { Component, Vue } from 'vue-property-decorator';
 	  constructor() {
 	  	super();
 		  this.httpService = new FetchHttpService();
-	  }
-
-    public getComputedStyle(name: String) {
-      var imageContext = require.context('../../../../../../image/', false)
-      console.log('imageContext', imageContext)
-      return imageContext('./' + name)
-    }    
+	  }   
 
 	  public async refresh() {
 	    const images = await this.loadData();

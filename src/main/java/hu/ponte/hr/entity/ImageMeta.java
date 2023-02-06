@@ -1,4 +1,4 @@
-package hu.ponte.hr.controller;
+package hu.ponte.hr.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;

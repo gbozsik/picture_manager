@@ -1,6 +1,6 @@
 package hu.ponte.hr.services;
 
-import hu.ponte.hr.controller.ImageMeta;
+import hu.ponte.hr.entity.ImageMeta;
 import hu.ponte.hr.repository.ImageMetaRepository;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

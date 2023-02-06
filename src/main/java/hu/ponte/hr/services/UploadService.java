@@ -1,12 +1,12 @@
 package hu.ponte.hr.services;
 
-import hu.ponte.hr.controller.ImageMeta;
-import hu.ponte.hr.exception.ServiceException;
+import hu.ponte.hr.entity.ImageMeta;
+import hu.ponte.hr.exception.ClientException;
+import hu.ponte.hr.exception.TechnicalException;
 import hu.ponte.hr.repository.ImageMetaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,12 +35,12 @@ public class UploadService {
     }
 
     @Transactional
-    public ImageMeta uploadPicture(MultipartFile file) throws ServiceException {
-        validatePictureSize(file);
+    public ImageMeta uploadPicture(MultipartFile file) throws TechnicalException, ClientException {
+        validatePicture(file);
         return doUploadPicture(file);
     }
 
-    private ImageMeta doUploadPicture(MultipartFile file) throws ServiceException {
+    private ImageMeta doUploadPicture(MultipartFile file) throws TechnicalException {
         try {
             String uploadsDir = getUploadDirectory();
             String originalName = file.getOriginalFilename();
@@ -48,7 +48,7 @@ public class UploadService {
             return getPersistedImageMeta(uploadsDir, originalName, path);
         } catch (Exception e) {
             log.error("Could not save uploaded picture!", e);
-            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not save uploaded picture!");
+            throw new TechnicalException("Could not save uploaded picture!");
         }
     }
 
@@ -66,13 +66,12 @@ public class UploadService {
         File dest = new File(filePath);
         var path = dest.toPath();
         if (!dest.exists()) {
-//            file.transferTo(dest);
             Files.copy(file.getInputStream(), Paths.get(filePath));
         }
         return path;
     }
 
-    private ImageMeta getPersistedImageMeta(String uploadsDir, String originalName, Path path) throws IOException, ServiceException {
+    private ImageMeta getPersistedImageMeta(String uploadsDir, String originalName, Path path) throws IOException, TechnicalException {
         String mimeType = Files.probeContentType(path);
         var imageData = ImageMeta.builder()
                 .name(originalName)
@@ -85,10 +84,13 @@ public class UploadService {
         return savedImageData;
     }
 
-    private static void validatePictureSize(MultipartFile file) throws ServiceException {
+    private static void validatePicture(MultipartFile file) throws ClientException {
+        if (file.isEmpty()) {
+            throw new ClientException("Received file is empty!");
+        }
         if (file.getSize() > 2000000) {
             log.error("File can not be larger than 2 MB.");
-            throw new ServiceException(HttpStatus.BAD_REQUEST, "File can not be larger than 2 MB.");
+            throw new ClientException("File can not be larger than 2 MB.");
         }
     }
 }

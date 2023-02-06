@@ -1,6 +1,7 @@
 package hu.ponte.hr.controller;
 
 
+import hu.ponte.hr.entity.ImageMeta;
 import hu.ponte.hr.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

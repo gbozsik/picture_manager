@@ -1,7 +1,7 @@
 package hu.ponte.hr.integration.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hu.ponte.hr.controller.ImageMeta;
+import hu.ponte.hr.entity.ImageMeta;
 import hu.ponte.hr.controller.upload.UploadController;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,7 +1,8 @@
 package hu.ponte.hr.controller.upload;
 
-import hu.ponte.hr.controller.ImageMeta;
-import hu.ponte.hr.exception.ServiceException;
+import hu.ponte.hr.entity.ImageMeta;
+import hu.ponte.hr.exception.ClientException;
+import hu.ponte.hr.exception.TechnicalException;
 import hu.ponte.hr.services.UploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,18 +29,8 @@ public class UploadController {
     }
 
     @RequestMapping(value = "post", method = RequestMethod.POST)
-    public ResponseEntity<ImageMeta> handleFormUpload(@RequestParam("file") MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
-                var imageMeta = uploadService.uploadPicture(file);
-                return new ResponseEntity<>(imageMeta, HttpStatus.CREATED);
-            } catch (ServiceException e) {
-                log.error("Could not upload picture", e);
-                return new ResponseEntity<>(e.getHttpStatus());
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ImageMeta> handleFormUpload(@RequestParam("file") MultipartFile file) throws TechnicalException, ClientException {
+        var imageMeta = uploadService.uploadPicture(file);
+        return new ResponseEntity<>(imageMeta, HttpStatus.CREATED);
     }
 }

@@ -19,6 +19,10 @@ A "node-sass" függőség verzióját emeltem, mert a gépement frisebb nodeJs v
 A privát és publikus kulcs nincs fent a repositoryban. Ezeket vissza kell másolni a /resources/config/keys mappába.
 Ezek után futtatahtó a `mvn spring-boot:run` parancs.
 
+Működés:
+A backend az ImageMeta entity-vel lementi a kép meta adatait h2 adatbázisba.
+A képet magát pedig az image mappába menti.
+
 
 	
 Kiegészítések
